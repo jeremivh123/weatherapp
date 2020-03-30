@@ -1,0 +1,113 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Weather App</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <script src="https://kit.fontawesome.com/fe9a3c5882.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <!--header-->
+        <div id="header">
+            <h1>Weather Dashboard</h1>
+        </div>
+
+        <!----search and history-->
+        <div id="left">
+                <p>Search for a City:</p>
+                <div class="input">
+                        <input type="text" id="cityInput" placeholder="" >
+                        
+                          <button class="button"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <table id="cityHistory">
+
+                </table>
+                    
+        </div>
+            <!---weather info-->  
+        <div id="weatherInfo">
+            <div id="nameOfWeather">
+
+            </div>
+            
+            <div id="dateOf">
+
+            </div>
+
+            <div id="tempOfWeather">
+                Temperature:
+            </div>
+            
+            <div id="humidOfWeather">
+                Humidity:
+            </div>
+
+            <div id="windOfWeather">
+                Wind:
+            </div>
+        </div>
+
+        <div id="fiveDay">
+            
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(".button").on("click", function() {
+        //$("#weatherInfo").empty();
+      var city = $('#cityInput').val();
+      //console.log(city);
+      var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=df8d8bb428fe0380821a18a0b3bdd4d4";
+
+$.ajax({
+  url: queryURL,
+  method: "GET"
+})
+  .then(function(response) {
+      console.log(response.main.temp);
+    
+
+    var name = $("<div>");
+     var date = $("<div>");
+    var temp = $("<div>");
+    var humid = $("<div>");
+     var wind = $("<div>");
+      
+name.html(response.name); 
+date.html(response.timezone); 
+temp.html(response.main.temp);
+humid.html(response.main.humidity); 
+wind.html(response.wind.speed); 
+
+    
+$("#nameOfWeather").prepend(name);
+$("#dateOf").prepend(date);
+$("#tempOfWeather").append(temp);
+$("#humidOfWeather").prepend(humid);
+$("#windOfWeather").prepend(wind);
+
+var p = $("<p>").text(response.name);
+$("#cityHistory").prepend(p);  
+  });
+});
+
+$(".button").on("click", function(){
+    var queryURL = "api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=df8d8bb428fe0380821a18a0b3bdd4d4";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function(response){
+            
+        })
+})
+
+
+
+</script>
+    </body>
+</html>
